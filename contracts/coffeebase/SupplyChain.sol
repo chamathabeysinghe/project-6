@@ -148,6 +148,7 @@ contract SupplyChain is DistributorRole, RetailerRole, ConsumerRole, FarmerRole,
 
     // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
     function harvestItem(uint _upc, address _originFarmerID, string _originFarmName, string _originFarmInformation, string _originFarmLatitude, string _originFarmLongitude, string _productNotes) public
+    onlyFarmer
     {
         // Add the new item as part of Harvest
         items[_upc] = Item(sku, _upc, _originFarmerID, _originFarmerID, _originFarmName, _originFarmInformation, _originFarmLatitude, _originFarmLongitude, _upc + sku, _productNotes, 0, State.Harvested, 0, 0, 0);
@@ -212,6 +213,7 @@ contract SupplyChain is DistributorRole, RetailerRole, ConsumerRole, FarmerRole,
     paidEnough(items[_upc].productPrice)
         // Call modifer to send any excess ether back to buyer
     checkValue(_upc)
+    onlyDistributor
     {
 
         // Update the appropriate fields - ownerID, distributorID, itemState
